@@ -1,0 +1,14 @@
+{
+  "name": "trello-bot",
+  "version": "1.0.0",
+  "description": "A bot for trello to manage and notify all activities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "trello": "^0.9.1"
+  }
+}
