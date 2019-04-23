@@ -8,5 +8,8 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^7.0.0",
+    "node-telegram-bot-api": "^0.30.0"
+  }
 }
