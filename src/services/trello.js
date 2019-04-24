@@ -1,28 +1,48 @@
-const Trello = require('node-trello')
+const Trello = require('trello')
 
-const API_TOKEN = '1fa06334b27485c9f7b89a09727b1bf62a227727733e57dd58320f7a514fffe8'
-const APP_KEY = '35ab36c526d77c821813a12880fbb5da'
+const API_TOKEN = process.env.API_TOKEN
+const APP_KEY = process.env.APP_KEY
 
-
-
-class TrelloAccount {
+class TrelloService {
 
   constructor() {
     this.t = new Trello(APP_KEY, API_TOKEN)
   }
 
-  me() {
+  async me() {
+    let data = await this.t.getMember('me')
 
-    return this.t.get('/1/members/me', (err, data) => {
-      if (err)
-        throw err;
+    return data
+  }
 
-      data = data
-      return data
-    })
+  async getBoardData() {
+    let boardId = process.env.BOARD_ID
+    let data = await this.t.getListsOnBoard(boardId)
 
+    return data
+  }
+
+  async getCardsByList(listName) {
+
+    const lists = await this.getBoardData()
+    let selectedList = {}
+
+    for (let list of lists) {
+      const { name } = list
+
+      if (name.toString().indexOf(listName) === 0) {
+        selectedList = list
+        break
+      }
+    }
+
+    const { id: listId } = selectedList
+
+    const data = await this.t.getCardsOnList(listId)
+
+    return data
   }
 }
 
 
-module.exports = TrelloAccount
+module.exports = TrelloService
